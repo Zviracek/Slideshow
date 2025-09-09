@@ -69,7 +69,9 @@ fn main() {
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="controls"></div>
+<div id="controls">
+  <button id="fullscreen-btn">Fullscreen</button>
+</div>
 <div id="slideshow"></div>
 <script src="slideshow.js"></script>
 <script src="logic.js"></script>
@@ -111,6 +113,16 @@ fn main() {
     // jednoduchá logika v JS
     let js_logic = r#"const controlsDiv = document.getElementById('controls');
 const slideshowDiv = document.getElementById('slideshow');
+
+// Fullscreen button logic
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+fullscreenBtn.onclick = () => {
+    if (document.fullscreenElement) {
+        document.exitFullscreen();
+    } else {
+        document.documentElement.requestFullscreen();
+    }
+};
 
 
 // Vytvoření checkboxů
