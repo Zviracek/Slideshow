@@ -15,52 +15,79 @@ fullscreenBtn.onclick = () => {
 // Vytvoření checkboxů
 const selected = {};
 data.categories.forEach(cat => {
-const label = document.createElement('label');
-const cb = document.createElement('input');
-cb.type = 'checkbox';
-cb.checked = true;
-selected[cat.name] = true;
-cb.onchange = () => { selected[cat.name] = cb.checked; };
-label.appendChild(cb);
-label.appendChild(document.createTextNode(cat.name));
-controlsDiv.appendChild(label);
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = true;
+    selected[cat.name] = true;
+    cb.onchange = () => { selected[cat.name] = cb.checked; };
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(cat.name));
+    controlsDiv.appendChild(label);
 });
 
 
 let currentCategoryIndex = 0;
 let currentImageIndex = 0;
+let currentSlideIndex = 0;
 let currentElem = null; // currently visible element
 
 const fadeDuration = 2000;    // CSS fade in/out duration
 const displayDuration = 3000; // fully visible time
 
+// Build slide sequence per category
+function buildCategorySequence(cat) {
+    const slides = [];
+
+    // Header
+    slides.push({ type: 'header', name: cat.name, logo: '../logo.png' });
+
+    // Optional video
+    if (cat.video) {
+        slides.push({ type: 'video', src: '../' + cat.video });
+    }
+
+    // Images
+    cat.images.forEach(img => slides.push({ type: 'image', src: '../' + img }));
+
+    return slides;
+}
+
 function showNext() {
-    console.log("LOL");
+    console.log("show next");
     const activeCats = data.categories.filter(cat => selected[cat.name]);
     if (activeCats.length === 0) return;
 
     const cat = activeCats[currentCategoryIndex % activeCats.length];
+    const slides = buildCategorySequence(cat);
+    const slide = slides[currentSlideIndex % slides.length];
 
+    console.log("Current slide:", slide);
     let nextElem;
-    if (currentImageIndex === 0) {
+    // Build element based on slide type
+    if (slide.type === 'header') {
+        console.log("show header");
         nextElem = document.createElement('h1');
-
-        // create logo <img> (same for all categories)
         const logoImg = document.createElement('img');
-        logoImg.src = '../logo.png';   // path to your single logo file
-        logoImg.classList.add('logo'); // optional CSS class
+        logoImg.src = slide.logo;
+        logoImg.classList.add('logo');
         nextElem.appendChild(logoImg);
 
-        // add category name text
         const nameSpan = document.createElement('span');
-        nameSpan.textContent = cat.name;
+        nameSpan.textContent = slide.name;
         nextElem.appendChild(nameSpan);
-    } else {
-        console.log("showing picture");
+    } else if (slide.type === 'video') {
+        console.log("show video");
+        nextElem = document.createElement('video');
+        nextElem.src = slide.src;
+        nextElem.autoplay = true;
+        nextElem.muted = true;
+        nextElem.playsInline = true;
+        nextElem.controls = false;
+    } else if (slide.type === 'image') {
+        console.log("show image");
         nextElem = document.createElement('img');
-        nextElem.onerror = () => console.log("image failed to load:", nextElem.src);
-
-        nextElem.src = '../' + cat.images[(currentImageIndex - 1) % cat.images.length];
+        nextElem.src = slide.src;
     }
 
     const startFade = () => {
@@ -87,37 +114,36 @@ function showNext() {
 
         currentElem = nextElem;
 
-        // Update indexes
-        currentImageIndex++;
-        if (currentImageIndex > cat.images.length) {
-            currentImageIndex = 0;
+        // Advance indexes
+        currentSlideIndex++;
+        if (currentSlideIndex >= slides.length) {
+            currentSlideIndex = 0;
             currentCategoryIndex++;
         }
 
-        setTimeout(showNext, displayDuration);
+        // Determine delay
+        if (slide.type === 'video') {
+            // Wait until video ends
+            nextElem.onended = () => showNext();
+            nextElem.play();
+        } else {
+            setTimeout(showNext, displayDuration);
+        }
     };
 
     slideshowDiv.appendChild(nextElem);
 
-    if (nextElem.tagName === 'IMG') {
+    if (slide.type === 'image') {
+        // Only start fade after image loaded
         if (nextElem.complete) {
             startFade();
         } else {
             nextElem.onload = startFade;
         }
     } else {
-        startFade(); // header
+        // header or video start immediately
+        startFade();
     }
-
-    //if (nextElem.tagName === 'IMG') {
-        //if (nextElem.complete) {
-            //startFade();
-        //} else {
-            //nextElem.onload = startFade;
-        //}
-    //} else {
-        //startFade(); // header
-    //}
 }
 
 // Start slideshow
