@@ -2,17 +2,55 @@ use std::fs;
 use std::io::Write;
 use std::path::Path;
 
-fn main() {
-    let photos_dir = "photos";
-    let mut categories = vec![];
+use rand::seq::SliceRandom;
+use rand::rng;
 
-    // Projde složky v adresáři `photos`
+// Category structure
+struct Category {
+    name: String,
+    images: Vec<String>,
+    videos: Vec<String>,
+    sponsors: Vec<String>,
+}
+
+fn main() {
+    // Path to photos & sponsors
+    let photos_dir = "photos";
+    let sponsors_dir = format!("{}/sponsors", photos_dir);
+
+    // Collect sponsor logos first
+    let mut sponsors_pool = vec![];
+    if let Ok(entries) = fs::read_dir(&sponsors_dir) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if let Some(ext) = path.extension().and_then(|e| e.to_str()) {
+                match ext.to_lowercase().as_str() {
+                    "jpg" | "jpeg" | "png" | "gif" => {
+                        sponsors_pool.push(format!(
+                            "../{}/{}",
+                            sponsors_dir,
+                            entry.file_name().to_string_lossy()
+                        ));
+                    }
+                    _ => {}
+                }
+            }
+        }
+    }
+
+    let mut categories: Vec<Category> = vec![];
+
+    // Scan photos_dir for category folders (skip sponsors folder itself)
     if let Ok(entries) = fs::read_dir(photos_dir) {
         for entry in entries.flatten() {
             if entry.file_type().map(|ft| ft.is_dir()).unwrap_or(false) {
                 let category_name = entry.file_name().to_string_lossy().to_string();
+                if category_name == "sponsors" {
+                    continue; // skip sponsor folder
+                }
+
                 let mut images = vec![];
-                let mut video: Option<String> = None;
+                let mut videos = vec![];
 
                 // read files inside each category folder
                 if let Ok(files) = fs::read_dir(entry.path()) {
@@ -22,49 +60,56 @@ fn main() {
                             let fname = file.file_name().to_string_lossy().to_string();
                             let rel_path = format!("{}/{}", category_name, fname);
 
-                            // classify file type
                             match ext.to_lowercase().as_str() {
-                                "mp4" => {
-                                    // take first video found as the category video
-                                    if video.is_none() {
-                                        video = Some(rel_path);
-                                    }
-                                }
-                                "jpg" | "jpeg" | "png" | "gif" => {
-                                    images.push(rel_path);
-                                }
+                                "mp4" => videos.push(format!("../{}/{}", photos_dir, rel_path)),
+                                "jpg" | "jpeg" | "png" | "gif" => images.push(format!("../{}/{}", photos_dir, rel_path)),
                                 _ => {}
                             }
                         }
                     }
                 }
 
-                // store (category, images, optional video)
-                // we can store as a struct or triple — here use triple
-                categories.push((category_name, images, video));
+                // pick two random sponsors (if available)
+                let mut rng = rng();
+                let mut picked_sponsors = sponsors_pool.clone();
+                picked_sponsors.shuffle(&mut rng);
+                let sponsors = picked_sponsors.into_iter().take(2).collect::<Vec<_>>();
+
+                categories.push(Category {
+                    name: category_name,
+                    images,
+                    videos,
+                    sponsors,
+                });
             }
         }
     }
 
     // JSON-like data
     let mut data = String::from("const data = { categories: [\n");
-    for (cat, imgs, video) in &categories {
-        // opening brace
-        data.push_str(&format!(" {{ name: \"{}\", ", cat));
+    for cat in &categories {
+        data.push_str(&format!(" {{ name: \"{}\", ", cat.name));
 
-        // optional video
-        if let Some(video_path) = video {
-            let full_video_path = format!("{}/{}", photos_dir, video_path);
-            data.push_str(&format!("video: \"{}\", ", full_video_path));
+        // videos array
+        data.push_str("videos: [\n");
+        for vid in &cat.videos {
+            data.push_str(&format!(" \"{}\",\n", vid));
         }
+        data.push_str("], ");
 
         // images array
         data.push_str("images: [\n");
-        for img in imgs {
-            let full_img_path = format!("{}/{}", photos_dir, img);
-            data.push_str(&format!(" \"{}\",\n", full_img_path));
+        for img in &cat.images {
+            data.push_str(&format!(" \"{}\",\n", img));
         }
-        data.push_str(" ]},\n");
+        data.push_str("], ");
+
+        // sponsors array
+        data.push_str("sponsors: [\n");
+        for s in &cat.sponsors {
+            data.push_str(&format!(" \"{}\",\n", s));
+        }
+        data.push_str("]},\n");
     }
     data.push_str("]};");
 
