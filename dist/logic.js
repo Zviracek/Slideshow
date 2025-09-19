@@ -53,11 +53,7 @@ function showNext() {
   chosen.forEach(s => phases.push({ type: 'image', src: s }));
 }
 
-  // If we reached end of phases, go to next category
-  if (currentPhaseIndex >= phases.length) {
-    currentPhaseIndex = 0;
-    currentCategoryIndex++;
-  }
+  
 
   const phase = phases[currentPhaseIndex % phases.length];
   currentPhaseIndex++;
@@ -136,7 +132,23 @@ function showNext() {
   } else {
     startFade();
   }
+
+// If we reached end of phases, go to next category
+  if (currentPhaseIndex >= phases.length) {
+    currentPhaseIndex = 0;
+    currentCategoryIndex++;
+  }
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'f') { // press "f" to fullscreen
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
+});
 
 // Start slideshow
 showNext();

@@ -7,6 +7,10 @@ body {
   overflow: hidden;
 }
 
+#controls {
+  opacity: 0;
+}
+
 /* slideshow photos only */
 #slideshow img:not(.logo):not(.sponsor) {
   position: absolute;
