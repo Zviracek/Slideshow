@@ -7,8 +7,6 @@ fn main() {
 
 use leptos::prelude::*;
 use gloo_timers::callback::{Interval, Timeout};
-use std::rc::Rc;
-use leptos::*;
 
 #[component]
 pub fn RotatingText() -> impl IntoView {
@@ -20,49 +18,54 @@ pub fn RotatingText() -> impl IntoView {
         "Now showing: Nature".to_string(),
         "Sponsored message".to_string(),
         "Breaking: Important news".to_string(),
+        "Pog".to_string(),
     ];
-
-    // reactive index signal
-    let (index, set_index) = signal(0);
 
     // number of milliseconds between changes
     let interval_ms = 5_000;
     // capture length for the timer closure
-    let n = texts.len();
 
-    let (current, set_current) = signal(0);
-    let (previous, set_previous) = signal(None::<usize>);
+    let (index_a, set_index_a) = signal(0);
+    let (index_b, set_index_b) = signal(0);
     let (show_new, set_show_new) = signal(true);
+    let (current_index_a, set_current_index_a) = signal(true);
     let n = texts.len();
 
     Effect::new(move |_| {
-        // Interval::new requires a 'static closure, so we move owned clones in.
-        let set_index = set_index.clone();
-
         // The timer closure updates the reactive index on each tick.
-        // We use modulo by `n` to wrap around.
-        let interval = Interval::new(interval_ms, move || {
-            //set_index.update(|i| *i = (*i + 1) % n);
-        });
 
-        let set_current = set_current.clone();
-        let set_previous = set_previous.clone();
+        let index_a = index_a.clone();
+        let index_b = index_b.clone();
         let set_show_new = set_show_new.clone();
+        let current_index_a = current_index_a.clone();
 
-        let interval = Interval::new(5_000, move || {
-            set_previous.set(Some(current.get()));
+        let interval = Interval::new(interval_ms, move || {
+
+            let mut new_index;
+            if current_index_a.get() {
+                new_index = index_a.get() + 1;
+            } else {
+                new_index = index_b.get() + 1;
+            }
+
+            if new_index >= n {
+                new_index = 0;
+            }
+
+            if current_index_a.get() {
+                set_current_index_a.set(false);
+                set_index_b.set(new_index);
+            }
+            else {
+                set_current_index_a.set(true);
+                set_index_a.set(new_index);
+            }
+
             set_show_new.set(false); // start fade out
             leptos::task::spawn_local({
-                let set_current = set_current.clone();
                 let set_show_new = set_show_new.clone();
                 async move {
                     let timeout = Timeout::new(1_000, move || {
-                        //set_current.update(|i| *i = (*i + 1) % n);
-                        if current.get() >= n - 1 {
-                            *set_current.write() = 0;
-                        } else {
-                            *set_current.write() += 1;
-                        }
                         set_show_new.set(true);
                     });
 
@@ -77,8 +80,8 @@ pub fn RotatingText() -> impl IntoView {
         interval.forget();
     });
 
-    let text_old = texts.clone();
-    let text_new = texts.clone();
+    let text_a = texts.clone();
+    let text_b = texts.clone();
 
     // render current text
     view! { 
@@ -88,11 +91,11 @@ pub fn RotatingText() -> impl IntoView {
         <div class="fade-container">
             // Old text fading out
             <p class=move || if show_new.get() { "fade-text hidden" } else { "fade-text visible" }>
-                { move || previous.get().map(|i| text_new[i].clone()).unwrap_or_default() }
+                { move || text_a[index_a.get()].clone() }
             </p>
             // New text fading in
             <p class=move || if show_new.get() { "fade-text visible" } else { "fade-text hidden" }>
-                { move || text_old[current.get()].clone() }
+                { move || text_b[index_b.get()].clone() }
             </p>
         </div>
     }
