@@ -10,8 +10,8 @@ const data = { categories: [
  "../photos/Klubové miniturnaje/WhatsApp-Image-2025-04-27-at-10.29.201.jpeg",
  "../photos/Klubové miniturnaje/WhatsApp-Image-2025-04-27-at-10.29.21.jpeg",
 ], sponsors: [
- "../photos/sponsors/Magistrat-mesta-Plzne.png",
- "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
+ "../photos/sponsors/Logo_Kral_PM_Centrum_varianta_plachty_2018.png",
+ "../photos/sponsors/logo_Plzen_Sportovni-rgb.png",
 ]},
  { name: "Letní tábor Plasy 2025", videos: [
  "../photos/Letní tábor Plasy 2025/WhatsApp Video 2025-09-11 at 09.46.21.mp4",
@@ -52,8 +52,8 @@ const data = { categories: [
  "../photos/Letní tábor Plasy 2025/WhatsApp Image 2025-09-11 at 09.54.28 (5).jpeg",
  "../photos/Letní tábor Plasy 2025/WhatsApp Image 2025-09-11 at 09.54.28.jpeg",
 ], sponsors: [
- "../photos/sponsors/AK-Vlcek.png",
- "../photos/sponsors/logo_Plzen_Sportovni-rgb.png",
+ "../photos/sponsors/Magistrat-mesta-Plzne.png",
+ "../photos/sponsors/CSJu.png",
 ]},
  { name: "Naši nejmenší - skupiny úterý a čtvrtek", videos: [
  "../photos/Naši nejmenší - skupiny úterý a čtvrtek/WhatsApp Video 2025-09-11 at 16.40.15.mp4",
@@ -74,7 +74,7 @@ const data = { categories: [
  "../photos/Naši nejmenší - skupiny úterý a čtvrtek/WhatsApp Image 2025-09-11 at 16.40.27.jpeg",
 ], sponsors: [
  "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
- "../photos/sponsors/logo_Plzen_Sportovni-rgb.png",
+ "../photos/sponsors/Logo_Kral_PM_Centrum_varianta_plachty_2018.png",
 ]},
  { name: "Naši trenéři", videos: [
 ], images: [
@@ -96,8 +96,8 @@ const data = { categories: [
  "../photos/Naši trenéři/WhatsApp Image 2025-09-11 at 10.37.21 (1).jpeg",
  "../photos/Naši trenéři/WhatsApp Image 2025-09-11 at 10.37.21.jpeg",
 ], sponsors: [
- "../photos/sponsors/Logo_Plzensky_Kraj.gif",
- "../photos/sponsors/CSJu.png",
+ "../photos/sponsors/profesional-logo.png",
+ "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
 ]},
  { name: "Tréninky našich nejstarších", videos: [
  "../photos/Tréninky našich nejstarších/WhatsApp Video 2025-09-11 at 10.46.44.mp4",
@@ -120,7 +120,7 @@ const data = { categories: [
  "../photos/Tréninky našich nejstarších/WhatsApp Image 2025-09-11 at 10.46.58 (1).jpeg",
  "../photos/Tréninky našich nejstarších/WhatsApp Image 2025-09-11 at 10.46.58.jpeg",
 ], sponsors: [
+ "../photos/sponsors/profesional-logo.png",
  "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
- "../photos/sponsors/CSJu.png",
 ]},
 ]};
