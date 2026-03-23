@@ -11,7 +11,7 @@ const data = { categories: [
  "../photos/Klubové miniturnaje/WhatsApp-Image-2025-04-27-at-10.29.21.jpeg",
 ], sponsors: [
  "../photos/sponsors/Logo_Kral_PM_Centrum_varianta_plachty_2018.png",
- "../photos/sponsors/logo_Plzen_Sportovni-rgb.png",
+ "../photos/sponsors/ubl.png",
 ]},
  { name: "Letní tábor Plasy 2025", videos: [
  "../photos/Letní tábor Plasy 2025/WhatsApp Video 2025-09-11 at 09.46.21.mp4",
@@ -52,8 +52,29 @@ const data = { categories: [
  "../photos/Letní tábor Plasy 2025/WhatsApp Image 2025-09-11 at 09.54.28 (5).jpeg",
  "../photos/Letní tábor Plasy 2025/WhatsApp Image 2025-09-11 at 09.54.28.jpeg",
 ], sponsors: [
- "../photos/sponsors/Magistrat-mesta-Plzne.png",
+ "../photos/sponsors/profesional-logo.png",
+ "../photos/sponsors/ubl.png",
+]},
+ { name: "Memorial Ing. Vladimíra Beneše", videos: [
+], images: [
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.13 (1).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.13.jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (1).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (2).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (3).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (4).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (5).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14 (6).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.14.jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15 (1).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15 (2).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15 (3).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15 (4).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15 (5).jpeg",
+ "../photos/Memorial Ing. Vladimíra Beneše/WhatsApp Image 2026-03-23 at 20.47.15.jpeg",
+], sponsors: [
  "../photos/sponsors/CSJu.png",
+ "../photos/sponsors/ubl.png",
 ]},
  { name: "Naši nejmenší - skupiny úterý a čtvrtek", videos: [
  "../photos/Naši nejmenší - skupiny úterý a čtvrtek/WhatsApp Video 2025-09-11 at 16.40.15.mp4",
@@ -73,8 +94,8 @@ const data = { categories: [
  "../photos/Naši nejmenší - skupiny úterý a čtvrtek/WhatsApp Image 2025-09-11 at 16.40.14.jpeg",
  "../photos/Naši nejmenší - skupiny úterý a čtvrtek/WhatsApp Image 2025-09-11 at 16.40.27.jpeg",
 ], sponsors: [
- "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
- "../photos/sponsors/Logo_Kral_PM_Centrum_varianta_plachty_2018.png",
+ "../photos/sponsors/ubl.png",
+ "../photos/sponsors/Logo_Plzensky_Kraj.gif",
 ]},
  { name: "Naši trenéři", videos: [
 ], images: [
@@ -96,8 +117,32 @@ const data = { categories: [
  "../photos/Naši trenéři/WhatsApp Image 2025-09-11 at 10.37.21 (1).jpeg",
  "../photos/Naši trenéři/WhatsApp Image 2025-09-11 at 10.37.21.jpeg",
 ], sponsors: [
- "../photos/sponsors/profesional-logo.png",
- "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
+ "../photos/sponsors/AK-Vlcek.png",
+ "../photos/sponsors/ubl.png",
+]},
+ { name: "Radovánek", videos: [
+], images: [
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.40 (1).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.40.jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (1).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (2).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (3).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (4).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (5).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42 (6).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.42.jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (1).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (2).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (3).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (4).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (5).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43 (6).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.43.jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.44 (1).jpeg",
+ "../photos/Radovánek/WhatsApp Image 2026-03-23 at 20.51.44.jpeg",
+], sponsors: [
+ "../photos/sponsors/Logo_Plzensky_Kraj.gif",
+ "../photos/sponsors/ubl.png",
 ]},
  { name: "Tréninky našich nejstarších", videos: [
  "../photos/Tréninky našich nejstarších/WhatsApp Video 2025-09-11 at 10.46.44.mp4",
@@ -120,7 +165,7 @@ const data = { categories: [
  "../photos/Tréninky našich nejstarších/WhatsApp Image 2025-09-11 at 10.46.58 (1).jpeg",
  "../photos/Tréninky našich nejstarších/WhatsApp Image 2025-09-11 at 10.46.58.jpeg",
 ], sponsors: [
- "../photos/sponsors/profesional-logo.png",
- "../photos/sponsors/Narodni-sportovni-agentura_logo-rgb.png",
+ "../photos/sponsors/ubl.png",
+ "../photos/sponsors/CSJu.png",
 ]},
 ]};
