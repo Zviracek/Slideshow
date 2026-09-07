@@ -1,0 +1,120 @@
+body {
+  font-family: sans-serif;
+  background: black;
+  color: white;
+  text-align: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+#controls {
+  opacity: 0;
+}
+
+/* slideshow photos only */
+#slideshow img:not(.logo):not(.sponsor) {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%;
+  max-height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  object-fit: contain;
+}
+
+/* slideshow videos */
+#slideshow video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 100%;         /* always match slideshow height */
+  width: auto;          /* adjust width automatically */
+  max-width: none;      /* no limit */
+  max-height: none;     /* no limit */
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  object-fit: cover;    /* or 'contain' depending on effect */
+  background: black;
+}
+
+
+/* headers */
+#slideshow h1 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  font-size: 80px;
+  display: flex;
+  flex-direction: column; /* stack logo above text */
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  line-height: normal;
+}
+
+/* logo inside header */
+#slideshow h1 img.logo {
+  display: block;
+  max-width: none;
+  max-height: none;
+  height: 500px; /* fixed size */
+  width: auto;
+  flex-shrink: 0;
+}
+
+/* Sponsors container */
+#slideshow .sponsors {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: row;
+  gap: 4rem;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: 9999;
+  background: black;
+}
+
+#slideshow .sponsors {
+  flex-wrap: wrap; /* allow wrapping */
+}
+
+#slideshow .sponsors img.sponsor-logo {
+  max-width: 400px;
+  max-height: 200px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+#slideshow .sponsors.active {
+  opacity: 1;
+}
+
+#slideshow .sponsors.active { opacity: 1; }
+
+/* fade in/out */
+#slideshow img.active,
+#slideshow video.active,
+#slideshow h1.active,
+#slideshow .sponsors.active {
+  opacity: 1;
+}
+
+#slideshow img.active {
+  opacity: 1 !important;
+}
+
+#slideshow img.sponsors-logo {
+  opacity: 1 !important;
+}
