@@ -5,6 +5,7 @@ compatibility_date = "2024-01-01"
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
 bucket_name = "slideshow"        # <-- change to your actual R2 bucket name
+jurisdiction = "eu"
 
 [vars]
 PUBLIC_BASE_URL = "https://pub-adf3ac4eedef4047bab9c5178655506e.r2.dev"  # <-- your bucket's public URL (see notes)
