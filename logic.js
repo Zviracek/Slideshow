@@ -1,6 +1,12 @@
 const controlsDiv = document.getElementById('controls');
 const slideshowDiv = document.getElementById('slideshow');
 
+// URL of your deployed Worker's /list endpoint. Change this after `wrangler deploy`.
+const WORKER_URL = 'https://slideshow-media-list.YOUR-SUBDOMAIN.workers.dev/list';
+
+// Path to your logo. Simplest option: commit logo.png next to index.html in this repo.
+const LOGO_PATH = 'logo.png';
+
 // Fullscreen button logic
 const fullscreenBtn = document.getElementById('fullscreen-btn');
 fullscreenBtn.onclick = () => {
@@ -11,19 +17,18 @@ fullscreenBtn.onclick = () => {
   }
 };
 
-// Checkbox controls
-const selected = {};
-data.categories.forEach(cat => {
-  const label = document.createElement('label');
-  const cb = document.createElement('input');
-  cb.type = 'checkbox';
-  cb.checked = true;
-  selected[cat.name] = true;
-  cb.onchange = () => { selected[cat.name] = cb.checked; };
-  label.appendChild(cb);
-  label.appendChild(document.createTextNode(cat.name));
-  controlsDiv.appendChild(label);
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'f') { // press "f" to fullscreen
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
+  }
 });
+
+let data = null;
+const selected = {};
 
 let currentCategoryIndex = 0;
 let currentPhaseIndex = 0;
@@ -31,6 +36,37 @@ let currentElem = null;
 
 const fadeDuration = 2000;
 const displayDuration = 3000;
+
+async function init() {
+  try {
+    const res = await fetch(WORKER_URL);
+    if (!res.ok) throw new Error(`Worker returned ${res.status}`);
+    data = await res.json();
+  } catch (err) {
+    slideshowDiv.textContent = 'Could not load media list.';
+    console.error('Failed to load slideshow data:', err);
+    return;
+  }
+
+  if (!data.categories || data.categories.length === 0) {
+    slideshowDiv.textContent = 'No categories found in bucket.';
+    return;
+  }
+
+  data.categories.forEach(cat => {
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = true;
+    selected[cat.name] = true;
+    cb.onchange = () => { selected[cat.name] = cb.checked; };
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(cat.name));
+    controlsDiv.appendChild(label);
+  });
+
+  showNext();
+}
 
 function showNext() {
   const activeCats = data.categories.filter(cat => selected[cat.name]);
@@ -45,15 +81,11 @@ function showNext() {
   cat.images.forEach(img => phases.push({ type: 'image', src: img }));
 
   // Append sponsor logos at the end as individual image slides
-  if (cat.sponsors && cat.sponsors.length > 0) {
-  // shuffle array
-  const shuffled = [...cat.sponsors].sort(() => 0.5 - Math.random());
-  // pick first two (no duplicates)
-  const chosen = shuffled.slice(0, 2); 
-  chosen.forEach(s => phases.push({ type: 'image', src: s }));
-}
-
-  
+  if (data.sponsors && data.sponsors.length > 0) {
+    const shuffled = [...data.sponsors].sort(() => 0.5 - Math.random());
+    const chosen = shuffled.slice(0, 2);
+    chosen.forEach(s => phases.push({ type: 'image', src: s }));
+  }
 
   const phase = phases[currentPhaseIndex % phases.length];
   currentPhaseIndex++;
@@ -63,7 +95,7 @@ function showNext() {
   if (phase.type === 'header') {
     nextElem = document.createElement('h1');
     const logoImg = document.createElement('img');
-    logoImg.src = '../logo.png';
+    logoImg.src = LOGO_PATH;
     logoImg.classList.add('logo');
     nextElem.appendChild(logoImg);
 
@@ -133,22 +165,12 @@ function showNext() {
     startFade();
   }
 
-// If we reached end of phases, go to next category
+  // If we reached end of phases, go to next category
   if (currentPhaseIndex >= phases.length) {
     currentPhaseIndex = 0;
     currentCategoryIndex++;
   }
 }
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'f') { // press "f" to fullscreen
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-    } else {
-      document.exitFullscreen();
-    }
-  }
-});
-
-// Start slideshow
-showNext();
+// Start slideshow once data is loaded
+init();
