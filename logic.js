@@ -2,7 +2,7 @@ const controlsDiv = document.getElementById('controls');
 const slideshowDiv = document.getElementById('slideshow');
 
 // URL of your deployed Worker's /list endpoint. Change this after `wrangler deploy`.
-const WORKER_URL = 'https://slideshow-media-list.YOUR-SUBDOMAIN.workers.dev/list';
+const WORKER_URL = 'https://slideshow-media-list.honza-zverina.workers.dev/list';
 
 // Path to your logo. Simplest option: commit logo.png next to index.html in this repo.
 const LOGO_PATH = 'logo.png';
