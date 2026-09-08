@@ -22,6 +22,5 @@ chromium --kiosk --noerrdialogs --disable-infobars \
   --overscroll-history-navigation=0 \
   --disable-features=Translate,TranslateUI \
   --disable-accelerated-video-decode \
-  --remote-debugging-port=9222 \
   https://zviracek.github.io/Slideshow/ &
 ```
